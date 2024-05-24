@@ -1,0 +1,9 @@
+name: snakemake
+channels:
+    - conda-forge
+    - bioconda
+dependencies:
+    - snakemake=8.11.3
+    - pip
+    - pip:
+        - snakemake-executor-plugin-cluster-generic==1.0.9

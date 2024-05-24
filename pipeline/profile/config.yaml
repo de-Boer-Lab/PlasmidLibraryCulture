@@ -1,0 +1,22 @@
+executor: cluster-generic
+cluster-generic-submit-cmd:
+    mkdir -p cluster_logs/{rule} &&
+    sbatch
+        --account="st-cdeboer-1"
+        --time={resources.time}
+        --nodes={resources.nodes}
+        --ntasks={resources.ntasks}
+        --cpus-per-task={threads}
+        --mem={resources.mem_mb}
+        --job-name=smk-{rule}-{wildcards}
+        --output=cluster_logs/{rule}/{rule}-{wildcards}-%j.out
+        --error=cluster_logs/{rule}/{rule}-{wildcards}-%j.err
+default-resources:
+    - nodes=1
+    - ntasks=1
+    - threads=1
+    - mem_mb=1000
+    - time="01:00:00"
+jobs: 100
+software-deployment-method: conda
+conda-frontend: conda

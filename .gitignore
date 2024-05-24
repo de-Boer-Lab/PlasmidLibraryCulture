@@ -1,0 +1,12 @@
+data/counts/
+data/stats/
+logs/
+output/
+job_logs/
+.snakemake/
+__pycache__/
+.ipynb_checkpoints/
+*.svg
+*.png
+cluster_logs/
+NGmerge/

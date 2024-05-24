@@ -1,0 +1,41 @@
+library,condition,replicate,empty tube mass (mg),tube + pellet mass (mg)
+N80,liquid,1,951,1042
+N80,semisolid,1,965,980
+N80,bead spread,1,982,1084
+N80,high-density spread,1,938,1043
+N80,low-density spread,1,1016,1658
+N80,liquid,2,990,1079
+N80,semisolid,2,1017,1030
+N80,bead spread,2,990,1091
+N80,high-density spread,2,979,1077
+N80,low-density spread,2,938,1565
+N80,liquid,3,979,1070
+N80,semisolid,3,969,984
+N80,bead spread,3,958,1060
+N80,high-density spread,3,954,1053
+N80,low-density spread,3,938,1578
+N80,liquid,4,991,1081
+N80,semisolid,4,949,963
+N80,bead spread,4,1045,1138
+N80,high-density spread,4,950,1038
+N80,low-density spread,4,965,1517
+MORF,liquid,1,957,1053
+MORF,semisolid,1,1047,1056
+MORF,bead spread,1,931,1047
+MORF,high-density spread,1,1048,1165
+MORF,low-density spread,1,1977,3044
+MORF,liquid,2,953,1048
+MORF,semisolid,2,952,962
+MORF,bead spread,2,951,1067
+MORF,high-density spread,2,958,1071
+MORF,low-density spread,2,1954,2962
+MORF,liquid,3,978,1069
+MORF,semisolid,3,941,948
+MORF,bead spread,3,976,1091
+MORF,high-density spread,3,946,1060
+MORF,low-density spread,3,1974,2876
+MORF,liquid,4,995,1091
+MORF,semisolid,4,945,956
+MORF,bead spread,4,951,1069
+MORF,high-density spread,4,988,1105
+MORF,low-density spread,4,1898,2848

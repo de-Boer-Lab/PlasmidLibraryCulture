@@ -1,0 +1,100 @@
+configfile: "pipeline_config.yaml"
+
+def get_input_fastqs(wildcards):
+    sample_index = config["samples"][wildcards.sample]
+    data_dir = config['data_dir']
+    return [
+        f"{data_dir}/PX3270_{sample_index}_1_150bp_3_lanes.merge.fastq.gz",
+        f"{data_dir}/PX3270_{sample_index}_2_150bp_3_lanes.merge.fastq.gz"
+    ]
+
+rule all:
+    localrule: True
+    input:
+        expand("output/counts/{sample}.txt", sample=config["samples"])
+
+
+rule sample:
+    input:
+        get_input_fastqs
+    output: 
+        r1=temp("output/sampled/{sample}_1.fastq"),
+        r2=temp("output/sampled/{sample}_2.fastq")
+    log:
+        "output/logs/sample/{sample}_sampling.log"
+    params:
+        sample_size=lambda wc: config["sample_size"][wc.sample.split('_')[0]]
+    conda:
+        "environment.yaml"
+    threads: 1
+    resources:
+        mem_mb=1000,
+        time="00:20:00"
+    shell:
+        """
+        seqtk sample -2 -s 42 {input[0]} {params.sample_size} > {output.r1}
+        seqtk sample -2 -s 42 {input[1]} {params.sample_size} > {output.r2}
+        cat {output.r1} | wc -l > {log}
+        """
+
+
+rule cutadapt_trim_PE:
+    input:
+        r1="output/sampled/{sample}_1.fastq",
+        r2="output/sampled/{sample}_2.fastq"
+    output: 
+        r1=temp("output/trimmed/{sample}_1.fastq"),
+        r2=temp("output/trimmed/{sample}_2.fastq"),
+    log:
+        summary="output/logs/cutadapt/{sample}_cutadapt.log"
+    params:
+        a1=lambda wc: config["flank"][f"{wc.sample.split('_')[0]}_r1"],
+        a2=lambda wc: config["flank"][f"{wc.sample.split('_')[0]}_r2"],
+        min_len=lambda wc: config["trimmed_len"][wc.sample.split('_')[0]],
+        max_len=lambda wc: config["trimmed_len"][wc.sample.split('_')[0]]
+    conda:
+        "environment.yaml"
+    threads: 1
+    resources:
+        mem_mb=1000,
+        time="00:20:00"
+    shell:
+        "cutadapt -j {threads} -m {params.min_len} -M {params.max_len} -a {params.a1} "
+        "-A {params.a2} -o {output.r1} -p {output.r2} {input} > {log.summary}"
+
+
+rule pair:
+    input:
+        r1="output/trimmed/{sample}_1.fastq",
+        r2="output/trimmed/{sample}_2.fastq"
+    output: 
+        temp("output/paired/{sample}.fastq")
+    log:
+        "output/logs/pair/pairing_failed_{sample}.log"
+    conda:
+        "environment.yaml"
+    threads: 1
+    resources:
+        mem_mb=4800,
+        time="1:00:00"
+    shell:
+        "./NGmerge/NGmerge -1 {input.r1} -2 {input.r2} -o {output} -y -f {log} -n {threads} -t /"
+        
+
+rule cluster:
+    input:
+        "output/paired/{sample}.fastq"
+    output:
+        "output/counts/{sample}.txt"
+    log:
+        "output/logs/starcode/{sample}_starcode.log"
+    params:
+        distance=3
+    conda:
+        "environment.yaml"
+    threads: 1
+    resources:
+        mem_mb=4800,
+        time="01:00:00"
+    shell:
+        "starcode -i {input} -o {output} -c -t {threads} -d {params.distance} > {log}"

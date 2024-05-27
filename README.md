@@ -4,9 +4,20 @@ This repository contains all code required to reproduce the results of Culture w
 
 ## Processing pipeline
 
-The `pipeline` directory contains a Snakemake pipeline that, for each sample, takes in a pair of fastq files and outputs a tab-separated file of each unique sequence observed and its count. The pipeline is set up to run on a cluster that uses Slurm.
+The `SRA_pipeline` directory contains a Snakemake pipeline that, for each sample, takes in a pair of fastq files and outputs a tab-separated file of each unique sequence observed and its count. The pipeline is set up to run on a cluster that uses Slurm. Note that the pipeline used to process the original fastq files can be found in `original_pipeline`. Files downloaded from the SRA have different filenames and a different delimiter for read number in the headers so the pipeline in `SRA_pipeline` needs to be used for these data. The output of both pipelines is identical.
 
-### 1. Create a Snakemake conda environment
+### 1. Download fastq files from the SRA
+
+With [sra-tools](https://github.com/ncbi/sra-tools) installed, from the `SRA_download` directory run the download_sra.sh script:
+
+```
+./download_sra.sh sra_accessions.txt
+```
+If any downloads or fastq conversions fail, simply run the script again to finish processing the failed samples. There should be 88 fastq files in the `SRA_download/sra_data` directory at the end.  
+
+Once the downloads are finished, gzip the files and transfer to a suitable location for running the pipeline.
+
+### 2. Create a Snakemake conda environment
 
 Create a conda environment from the `envs/snakemake_env.yaml` file (used conda 24.4.0):
 ```
@@ -14,15 +25,15 @@ conda env create --file snakemake_env.yaml
 conda activate snakemake
 ```
 
-### 2. Install NGmerge
+### 3. Install NGmerge
 
 All software used in the pipeline is automatically installed by Snakemake into a pipeline-specific conda environment except for NGmerge, as the version of NGmerge available on conda is not up to date and is missing a required option (-t, for setting the header delimiter). Clone [NGmerge](https://github.com/jsh58/NGmerge) version 0.3 into the `pipeline` directory and compile it according to the directions on GitHub. You should have an `NGmerge` directory containing the `NGmerge` binary inside the `pipeline` directory at the end.
 
-### 3. Configure the pipeline
+### 4. Configure the pipeline
 
 In `pipeline/pipeline_config.yaml`, set the `data_dir` variable to the path of the raw fastq files. Modify `pipeline/profile/config.yaml` to work with the cluster that you're using. For a Slurm cluster, only `--account` needs to be changed. See the Snakemake documentation for other job schedulers. You should be able to run the pipeline locally as well, but it will take a long time to run.
 
-### 4. Run the pipeline
+### 5. Run the pipeline
 
 In the `pipeline` directory, and with the `snakemake` environment activated, run
 ```

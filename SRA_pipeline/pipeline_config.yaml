@@ -1,0 +1,61 @@
+data_dir: /arc/project/st-cdeboer-1/nick/sra_data
+
+sample_size:
+    MORF: 453403
+    N80: 1969695
+
+flank:
+    MORF_r1: ^GCTTTATATATCTTGTGGAAAGGACGA...ACGCGTTAAGTCGACAATCA
+    MORF_r2: ^GCAGCGTATCCACATAGCGTAAAAGGAGCAACATAGTTAAGAATACCAGTCAATCTTTCACAAATTTTGTAATCCAGAGGTTGATTGTCGACTTAACGCGT...TCGTCCTTTCCACAAGATAT
+    N80_r1: ^TGCATTTTTTTCACATC...GGTTACGGCTGTT
+    N80_r2: ^AACAGCCGTAACC...GATGTGAAAAAAATGCA
+
+trimmed_len:
+    MORF: 24
+    N80: 80
+
+samples:
+    N80_semisolid_4: SRR29162411
+    N80_semisolid_3: SRR29162412
+    MORF_bead_4: SRR29162413
+    MORF_bead_3: SRR29162414
+    MORF_bead_1: SRR29162415
+    N80_semisolid_1: SRR29162416
+    MORF_small_plate_4: SRR29162417
+    N80_semisolid_2: SRR29162418
+    MORF_small_plate_3: SRR29162419
+    MORF_small_plate_2: SRR29162420
+    MORF_bead_2: SRR29162421
+    MORF_small_plate_1: SRR29162422
+    MORF_large_plate_4: SRR29162423
+    MORF_large_plate_3: SRR29162424
+    MORF_large_plate_2: SRR29162425
+    MORF_large_plate_1: SRR29162426
+    MORF_semisolid_4: SRR29162427
+    MORF_semisolid_3: SRR29162428
+    N80_liquid_4: SRR29162429
+    MORF_semisolid_2: SRR29162430
+    MORF_semisolid_1: SRR29162431
+    MORF_liquid_4: SRR29162432
+    MORF_liquid_3: SRR29162433
+    MORF_liquid_2: SRR29162434
+    MORF_liquid_1: SRR29162435
+    MORF_input_4: SRR29162436
+    MORF_input_3: SRR29162437
+    MORF_input_2: SRR29162438
+    MORF_input_1: SRR29162439
+    N80_liquid_3: SRR29162440
+    N80_bead_4: SRR29162441
+    N80_bead_3: SRR29162442
+    N80_bead_1: SRR29162443
+    N80_small_plate_4: SRR29162444
+    N80_small_plate_3: SRR29162445
+    N80_bead_2: SRR29162446
+    N80_small_plate_2: SRR29162447
+    N80_small_plate_1: SRR29162448
+    N80_large_plate_4: SRR29162449
+    N80_large_plate_2: SRR29162450
+    N80_large_plate_3: SRR29162451
+    N80_large_plate_1: SRR29162452
+    N80_liquid_2: SRR29162453
+    N80_liquid_1: SRR29162454

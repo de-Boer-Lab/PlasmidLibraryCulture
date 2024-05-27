@@ -1,5 +1,4 @@
 data/counts/
-data/stats/
 logs/
 output/
 job_logs/
@@ -8,5 +7,6 @@ __pycache__/
 .ipynb_checkpoints/
 *.svg
 *.png
+*.pkl
 cluster_logs/
 NGmerge/
